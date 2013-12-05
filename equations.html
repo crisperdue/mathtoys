@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+ "http://www.w3.org/TR/html4/loose.dtd">
+<!-- Uses "almost standards mode", all but some table cell sizing. -->
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Mathtoys - solve equations</title>
+  <link id=styles type="text/css" rel="stylesheet" href="logic.css">
+  <script src="boilerplate.js"></script>
+  <script src="mathtoys.js"></script>
+
+<style type="text/css">
+/* Page-specific CSS here */
+</style>
+
+</head>
+<body>
+
+<h1>Prooftoys</h1>
+
+<div id=slogans>
+<!-- slogans here -->
+</div>
+
+<span id=leftNav>
+<!-- Boilerplate text goes here -->
+</span>
+
+<span id=content>
+<h2>Solving equations</h2>
+<p>
+<b>Problem-solving strategy.</b>
+If the equation has just one
+variable, one good way to start the solution is to move all terms
+containing the variable to the same side of the equation, then
+simplify that side and move terms with just numbers to the other side.
+<p>
+If there are multiple variables, first get one of the equations into
+the form <s>v = &hellip; </s>, then <code>replace</code> any
+occurrences of it using this equation.  When that is done, solve it as
+an equation with a single variable.
+<p>
+<b>Moving a term.</b>
+The simplifier can detect that adding and subtracting the same term
+cancel each other out, so you can remove the last term on one side of
+an equation by adding or subtracting it from both sides and
+simplifying.  You can start by selecting the term.
+<p>
+<b>Working with your own problems.</b>
+With the "general reasoning" menu you can enter your own algebra
+problems.  Choose "assume" and enter your formula, using <code>+, -,
+*, and /</code> as the names for the basic arithmetic operators.  If
+you want to enter "4 times x" be sure to write <code>4 * x</code> and
+not <code>4x</code> or <code>4 x</code>.  Also know that Prooftoys is
+still learnings its algebra too!  It is very limited in what it can do
+with fractions and rational functions, though it knows the bare facts.
+After entering your assumptions you will probably want to switch the
+menus back to algebra mode before starting to work.
+<p>
+<div id=problemArea>
+<h3>Equations to solve</h3>
+<ol id=problemList>
+</ol>
+</div>
+
+<div id=workArea class=hidden>
+<h3>Problem work area</h3>
+<p>
+<div id=proof></div>
+</div>
+
+</span> <!-- content -->
+
+<!-- Storage for state to preserve across page unloads -->
+<textarea id=ToyStore rows=20 cols=80 class=hidden></textarea>
+<!-- Force some white space to accommodate the autocompleter menu. -->
+<div style="height: 20em"></div>
+
+<script>
+
+// Insert boilerplate.
+Toy.insertNav();
+Toy.insertSlogans();
+Toy.mathifyAll();
+
+// On DOM ready:
+$(function() {
+    var rules = Toy.rules;
+    var $problemList = $('#problemList');
+    var editor = new Toy.ProofEditor();
+    window.proofEditor = editor;
+    editor.setEditable(true);
+    $('#proof').append(editor.containerNode);
+
+    // List of lists of assumptions.
+    var problems = [
+      ['4 * (2 * x - 3) + 7 = 3 * x + 5'],
+      ['8 * (2 - t) = -5 * t'],
+      // Textbook examples.  We need user-friendly commands for
+      // working with factors in terms before surfacing these.
+      // ['x / 2 - 1 = 2 / 3 * x - 3'],
+      // ['2 * (a + 3) / 3 = 6 * a + 2'],
+      ['x + y = 7', 'x = y + 3']
+    ];
+
+    Toy.proofToyState.init();
+
+    var proofVisible = !!Toy.proofToyState.data.proofVisible;
+
+    function swapAreas() {
+      editor.stepEditor.showRules = [];
+      editor.stepEditor.reset();
+      editor.proofControl.setSteps([]);
+      $('#problemArea').toggle(300);
+      $('#workArea').toggle(300);
+      proofVisible = !proofVisible;
+      Toy.proofToyState.data.proofVisible = proofVisible;
+      Toy.proofToyState.store();
+    }
+
+    if (proofVisible) {
+      // Really the proof is not yet visible.
+      proofVisible = false;
+      // So make it visible now.
+      swapAreas();
+    }
+
+    function handleTryProblem(event) {
+      swapAreas();
+      var assumptions = event.data.assumptions;
+      for (var j = 0; j < assumptions.length; j++) {
+        editor.addStep(rules.assume(assumptions[j]));
+      }
+    };
+
+    function tryOwnProblem() {
+      swapAreas();
+      editor.stepEditor.showRules = ['assume'];
+      editor.stepEditor.reset();
+    }
+
+    // Insert the problems.
+    for (var i = 0; i < problems.length; i++) {
+      var assumptions = problems[i];
+      var markup = $('<span class=mathColor>');
+      for (var j = 0; j < assumptions.length; j++) {
+        var assumption = assumptions[j];
+        var terminator = assumptions.length === 1 ? ' ' : '<br>';
+        markup.append(Toy.mathMarkup(assumption), terminator);
+      }
+      var button = $('<button>Try this problem</button>');
+      $problemList.append($('<li>').append(markup, button));
+
+      // Set up event handlers.
+      button.on('click', {assumptions: assumptions}, handleTryProblem);
+    }
+    $problemList.append('<li><button class=ownProblem>' +
+                        'Try your own problem</button></li>');
+    $problemList.find('.ownProblem').on('click', tryOwnProblem);
+    $('#proof .proofButtons')
+      .append('<button id=tryAnother>Try another problem</button>');
+    $('#tryAnother').on('click', swapAreas);
+  });
+
+</script>
+</body>
+</html>
