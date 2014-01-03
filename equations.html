@@ -92,6 +92,7 @@ $(function() {
     var editor = new Toy.ProofEditor();
     window.proofEditor = editor;
     editor.setEditable(true);
+    editor.setRulesMode('algebra');
     $('#proof').append(editor.containerNode);
 
     // List of lists of assumptions.
