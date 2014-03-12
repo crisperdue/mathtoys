@@ -89,10 +89,14 @@ $(function() {
     $('#proof').append(editor.containerNode);
 
     var problems = [
-      'z = 3 * h - 14 + 7 * h - 2 * h  - 5 * h + 3',
-      'z = 15 * k - 4 - 5 * k + 16',
-      'z = -7 * (2 * y - 6) + 20 * y',
-      'z = 4 * (3 * x - 2) - 3 * (x + 7)'
+      {stmt: 'z = 3 * h - 14 + 7 * h - 2 * h  - 5 * h + 3',
+       simplified: 'z = 3 * h - 11'},
+      {stmt: 'z = 15 * k - 4 - 5 * k + 16',
+       simplified: 'z = 10 * k + 12'},
+      {stmt: 'z = -7 * (2 * y - 6) + 20 * y',
+       simplified: 'z = 6 * y + 42'},
+      {stmt: 'z = 4 * (3 * x - 2) - 3 * (x + 7)',
+       simplified: 'z = 9 * x - 29'}
     ];
 
     Toy.proofToyState.init();
@@ -119,8 +123,16 @@ $(function() {
 
     function handleTryProblem(event) {
       swapAreas();
-      var term = event.data.term;
-      editor.addStep(rules.assume(term));
+      var problem = event.data.problem;
+      var stmt = problem.stmt;
+      editor.addStep(rules.assume(stmt));
+      var simplified = problem.simplified;
+      if (simplified) {
+        // This is only the consequent.
+        var solution = Toy.parse(simplified);
+        editor.stepEditor.solutions = [solution];
+        console.log('Solution', solution.str);
+      }
     };
 
     function tryOwnProblem() {
@@ -133,13 +145,13 @@ $(function() {
     for (var i = 0; i < problems.length; i++) {
       var problem = problems[i];
       var markup = $('<span class=mathColor>')
-        .append(Toy.mathMarkup(problem), ' ');
+        .append(Toy.mathMarkup(problem.stmt), ' ');
       var button = $('<button>Try this problem</button>');
       $problemList.append($('<li>').append(markup, button));
 
       // Set up event handlers.
 
-      button.on('click', {term: problem}, handleTryProblem);
+      button.on('click', {problem: problem}, handleTryProblem);
     }
     $problemList.append('<li><button class=ownProblem>' +
                         'Try your own problem</button></li>');
