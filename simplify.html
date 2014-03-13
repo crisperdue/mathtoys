@@ -126,19 +126,20 @@ $(function() {
       var problem = event.data.problem;
       var stmt = problem.stmt;
       editor.addStep(rules.assume(stmt));
+      editor.stepEditor.showRules = [];
+      editor.setRulesMode('algebra');
       var simplified = problem.simplified;
       if (simplified) {
         // This is only the consequent.
         var solution = Toy.parse(simplified);
         editor.stepEditor.solutions = [solution];
-        console.log('Solution', solution.str);
       }
     };
 
     function tryOwnProblem() {
       swapAreas();
-      editor.stepEditor.showRules = ['consider'];
-      editor.stepEditor.reset();
+      editor.stepEditor.showRules = ['assume'];
+      editor.setRulesMode('algebra');
     }
 
     // Insert the problems.

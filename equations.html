@@ -132,6 +132,8 @@ $(function() {
 
     function handleTryProblem(event) {
       swapAreas();
+      editor.stepEditor.showRules = [];
+      editor.setRulesMode('algebra');
       var assumptions = event.data.assumptions;
       for (var j = 0; j < assumptions.length; j++) {
         editor.addStep(rules.assume(assumptions[j]));
@@ -141,7 +143,7 @@ $(function() {
     function tryOwnProblem() {
       swapAreas();
       editor.stepEditor.showRules = ['assume'];
-      editor.stepEditor.reset();
+      editor.setRulesMode('algebra');
     }
 
     // Insert the problems.
