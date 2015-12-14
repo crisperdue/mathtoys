@@ -145,6 +145,11 @@ $(function() {
       editor.setRulesMode('algebra');
     }
 
+    function tryExperiments() {
+      swapAreas();
+      editor.setRulesMode('general');
+    }
+
     // Insert the problems.
     for (var i = 0; i < problems.length; i++) {
       var assumptions = problems[i];
@@ -163,6 +168,11 @@ $(function() {
     $problemList.append('<li><button class=ownProblem>' +
                         'Try your own problem</button></li>');
     $problemList.find('.ownProblem').on('click', tryOwnProblem);
+
+    $problemList.append('<li><button class=tryExperiments>' +
+                        'Experiment with proofs</button></li>');
+    $problemList.find('.tryExperiments').on('click', tryExperiments);
+
     $('#proof .proofButtons')
       .append('<button id=tryAnother>Try another problem</button>');
     $('#tryAnother').on('click', swapAreas);
