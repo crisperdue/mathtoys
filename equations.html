@@ -93,6 +93,13 @@ $(function() {
     editor.setEditable(true);
     editor.setRulesMode('algebra');
     editor.stepEditor.standardSolution = true;
+
+    // For debugging.
+    window.dbStep = function(step) {
+      proofEditor.proofControl.setSteps([]);
+      proofEditor.proofControl.setSteps(Toy.unrenderedDeps(step));
+    };
+
     $('#proof').append(editor.containerNode);
 
     // List of lists of assumptions.
