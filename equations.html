@@ -49,7 +49,7 @@ simplifying.  You can start by selecting the term.
 <p>
 <b>Working with your own problems.</b>
 With the "general reasoning" menu you can enter your own algebra
-problems.  Choose "given" and enter your formula, using <code>+, -,
+problems.  Choose "consider" and enter your formula, using <code>+, -,
 *, and /</code> as the names for the basic arithmetic operators.  If
 you want to enter "4 times x" be sure to write <code>4 * x</code> and
 not <code>4x</code> or <code>4 x</code>.  Also know that Prooftoys is
@@ -143,29 +143,18 @@ $(function() {
       var assumptions = event.data.assumptions;
       var saved = Toy.stepEditor;
       Toy.stepEditor = editor.stepEditor;
-      if (assumptions.length == 1) {
-        // TODO: Use "given" for multivariable problems also,
-        // with support so it can work for users.
-        try {
-          for (var j = 0; j < assumptions.length; j++) {
-            editor.addStep(rules.given(assumptions[j]));
-          }
-        } finally {
-          Toy.stepEditor = saved;
-        }
-      } else {
-        // For now, use "assume" rather than "given" for problems with
-        // multiple variables, because we don't have a needed
-        // inference rule.
+      try {
         for (var j = 0; j < assumptions.length; j++) {
-          editor.addStep(rules.assume(assumptions[j]));
+          editor.addStep(rules.consider(assumptions[j]));
         }
+      } finally {
+        Toy.stepEditor = saved;
       }
     };
 
     function tryOwnProblem() {
       swapAreas();
-      editor.stepEditor.showRules = ['given'];
+      editor.stepEditor.showRules = ['consider'];
       editor.setRulesMode('algebra');
     }
 
