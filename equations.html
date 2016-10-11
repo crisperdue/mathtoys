@@ -141,6 +141,7 @@ $(function() {
       editor.stepEditor.showRules = [];
       editor.setRulesMode('algebra');
       var assumptions = event.data.assumptions;
+      editor.givens = assumptions;
       var saved = Toy.stepEditor;
       Toy.stepEditor = editor.stepEditor;
       try {
