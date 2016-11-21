@@ -141,13 +141,10 @@ $(function() {
       editor.stepEditor.showRules = [];
       editor.setRulesMode('algebra');
       var assumptions = event.data.assumptions;
-      editor.givens = assumptions;
       var saved = Toy.stepEditor;
       Toy.stepEditor = editor.stepEditor;
       try {
-        for (var j = 0; j < assumptions.length; j++) {
-          editor.addStep(rules.consider(assumptions[j]));
-        }
+        editor.givens = assumptions;
       } finally {
         Toy.stepEditor = saved;
       }
