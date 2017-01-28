@@ -8,3 +8,5 @@ JavaScript code for Mathtoys is contained in the Prooftoys repository at
 https://github.com/crisperdue/prooftoys.
 
 The Prooftoys engine itself also has its own web site at http://prooftoys.org/.
+
+See also https://www.pivotaltracker.com/n/projects/248279 for some task information.
