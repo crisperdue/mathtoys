@@ -9,7 +9,9 @@
   <script src="mathtoys.js"></script>
   
 <style type="text/css">
-/* Page-specific CSS here */
+#problemArea {
+  margin-bottom: 5em;
+}
 </style>
 
 </head>
@@ -74,11 +76,8 @@ menus back to algebra mode before starting to work.
 
 <!-- Storage for state to preserve across page unloads -->
 <textarea id=ToyStore rows=20 cols=80 class=hidden></textarea>
-<!-- Force some white space to accommodate the autocompleter menu. -->
-<div style="height: 20em"></div>
 
 <script>
-
 // Insert boilerplate.
 Toy.insertNav();
 Toy.insertSlogans();
