@@ -118,9 +118,7 @@ $(function() {
     var proofVisible = !!Toy.proofToyState.data.proofVisible;
 
     function swapAreas() {
-      editor.stepEditor.showRules = [];
-      editor.stepEditor.reset();
-      editor.proofDisplay.setSteps([]);
+      editor.clear();
       $('#problemArea').toggle(300);
       $('#workArea').toggle(300);
       proofVisible = !proofVisible;
