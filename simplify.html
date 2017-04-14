@@ -88,14 +88,14 @@ $(function() {
     $('#proof').append(editor.containerNode);
 
     var problems = [
-      {stmt: 'z = 3 * h - 14 + 7 * h - 2 * h  - 5 * h + 3',
-       simplified: 'z = 3 * h - 11'},
-      {stmt: 'z = 15 * k - 4 - 5 * k + 16',
-       simplified: 'z = 10 * k + 12'},
-      {stmt: 'z = -7 * (2 * y - 6) + 20 * y',
-       simplified: 'z = 6 * y + 42'},
-      {stmt: 'z = 4 * (3 * x - 2) - 3 * (x + 7)',
-       simplified: 'z = 9 * x - 29'}
+      {stmt: '3 * h - 14 + 7 * h - 2 * h  - 5 * h + 3',
+       simplified: '3 * h - 11'},
+      {stmt: '15 * k - 4 - 5 * k + 16',
+       simplified: '10 * k + 12'},
+      {stmt: '-7 * (2 * y - 6) + 20 * y',
+       simplified: '6 * y + 42'},
+      {stmt: '4 * (3 * x - 2) - 3 * (x + 7)',
+       simplified: '9 * x - 29'}
     ];
 
     Toy.proofToyState.init();
@@ -124,20 +124,30 @@ $(function() {
       swapAreas();
       var problem = event.data.problem;
       var stmt = problem.stmt;
-      editor.addStep(rules.assume(stmt));
+      editor.addStep(rules.consider(stmt));
       editor.stepEditor.showRules = [];
       editor.setRulesMode('algebra');
       var simplified = problem.simplified;
       if (simplified) {
-        // This is only the consequent.
-        var solution = Toy.parse(simplified);
-        editor.stepEditor.solutions = [solution];
+        // This is only the rhs.
+        var rhs = Toy.parse(simplified);
+        var infix = Toy.infixCall;
+        var call = Toy.call;
+        var free = rhs.freeVars();
+        var types = null;
+        for (var v in free) {
+          var cond = call('R', v);
+          types = types ? infix(types, '&', cond) : cond;
+        }
+        var solution = infix(cond, '=>', infix(Toy.parse(stmt), '=', rhs));
+        console.log('Solution =', solution.$$);
+        editor.solutions = [solution];
       }
     };
 
     function tryOwnProblem() {
       swapAreas();
-      editor.stepEditor.showRules = ['assume'];
+      editor.stepEditor.showRules = ['consider'];
       editor.setRulesMode('algebra');
     }
 
