@@ -12,6 +12,18 @@
 #problemArea {
   margin-bottom: 5em;
 }
+
+#problemArea button {
+  font-size: 80%;
+}
+
+#problemArea li {
+  margin: .5em 0;
+}
+
+#problemArea li span.mathColor {
+  display: inline-block;
+}
 </style>
 
 </head>
@@ -92,7 +104,6 @@ $(function() {
     var $problemList = $('#problemList');
     var editor = new Toy.ProofEditor();
     window.proofEditor = editor;
-    editor.setEditable(true);
     editor.setRulesMode('algebra');
     editor.stepEditor.standardSolution = true;
 
@@ -103,6 +114,9 @@ $(function() {
     };
 
     $('#proof').append(editor.containerNode);
+
+    // TODO: Consider using a list of document names rather than
+    // a list of lists of wffs to represent a problem set.
 
     // List of lists of assumptions.
     var problems = [
@@ -119,21 +133,19 @@ $(function() {
       ['x = -y - 11', '2 * x - y = 7']
     ];
 
-    Toy.proofToyState.init();
-
-    var proofVisible = !!Toy.proofToyState.data.proofVisible;
+    let proofVisible = editor.steps.length > 0;
 
     function swapAreas() {
-      editor.clear();
       $('#problemArea').toggle(300);
       $('#workArea').toggle(300);
       proofVisible = !proofVisible;
-      Toy.proofToyState.data.proofVisible = proofVisible;
-      Toy.proofToyState.store();
+      if (!proofVisible) {
+        editor.clear();
+      }
     }
 
     if (proofVisible) {
-      // Really the proof is not yet visible.
+      // Really the proof is not initially visible.
       proofVisible = false;
       // So make it visible now.
       swapAreas();
@@ -187,9 +199,7 @@ $(function() {
                         'Experiment with proofs</button></li>');
     $problemList.find('.tryExperiments').on('click', tryExperiments);
 
-    $('#proof .proofButtons')
-      .append('<button id=tryAnother>Try another problem</button>');
-    $('#tryAnother').on('click', swapAreas);
+    $('#proof .tryAnother').on('click', swapAreas);
 
   });
 
