@@ -9,6 +9,16 @@
   <script src="mathtoys.js"></script>
   
 <style type="text/css">
+
+/* If the proof editor is not editable, display this. */
+.proofEditorContainer .ifReadOnly {
+  display: block;
+}
+
+.proofEditorContainer.editable .ifReadOnly {
+  display: none;
+}
+
 #problemArea {
   margin-bottom: 5em;
 }
@@ -79,8 +89,12 @@ menus back to algebra mode before starting to work.
 </ol>
 </div>
 
-<div id=workArea class=hidden>
+<div id=workArea class="hidden proofEditorContainer">
 <h3>Problem work area</h3>
+<p class=ifReadOnly>
+<i><b style="color:red">Note:</b> This display is read-only due to editing
+in progress in another window or tab.</i>
+</p>
 <p>
 <div id=proof></div>
 </div>
@@ -114,6 +128,9 @@ $(function() {
     };
 
     $('#proof').append(editor.containerNode);
+    // Nudge the editor to set up any parent to reflect
+    // its editable state.
+    editor.setEditable(editor.isEditable());
 
     // TODO: Consider using a list of document names rather than
     // a list of lists of wffs to represent a problem set.
