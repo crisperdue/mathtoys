@@ -150,21 +150,19 @@ $(function() {
       ['x = -y - 11', '2 * x - y = 7']
     ];
 
+    // Initialize visibility based on whether there
+    // are currently any steps in the proof.
     let proofVisible = editor.steps.length > 0;
 
     function swapAreas() {
       $('#problemArea').toggle(300);
       $('#workArea').toggle(300);
       proofVisible = !proofVisible;
-      if (!proofVisible) {
-        editor.clear();
-      }
     }
 
     if (proofVisible) {
-      // Really the proof is not initially visible.
+      // Make the proof really visible by calling swapAreas.
       proofVisible = false;
-      // So make it visible now.
       swapAreas();
     }
 
@@ -216,7 +214,12 @@ $(function() {
                         'Experiment with proofs</button></li>');
     $problemList.find('.tryExperiments').on('click', tryExperiments);
 
-    $('#proof .tryAnother').on('click', swapAreas);
+    $('#proof .tryAnother').on('click', function() {
+        // Set the document name to the default for this page.
+        editor.setDocumentName('equations');
+        editor.clear();
+        swapAreas();
+    });
 
   });
 
