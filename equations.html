@@ -90,7 +90,10 @@ menus back to algebra mode before starting to work.
 </div>
 
 <div id=workArea class="hidden proofEditorContainer">
-<h3>Problem work area</h3>
+<div>
+<b style="font-size:larger">Problem work area</b>
+<button class="tryAnother float">Try a different problem ... </button>
+</div>
 <p class=ifReadOnly>
 <i><b style="color:red">Note:</b> This display is read-only due to editing
 in progress in another window or tab.</i>
@@ -214,7 +217,7 @@ $(function() {
                         'Experiment with proofs</button></li>');
     $problemList.find('.tryExperiments').on('click', tryExperiments);
 
-    $('#proof .tryAnother').on('click', function() {
+    $('.tryAnother').on('click', function() {
         // Set the document name to the default for this page.
         editor.setDocumentName('equations');
         editor.clear();
