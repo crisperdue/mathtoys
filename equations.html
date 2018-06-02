@@ -19,6 +19,16 @@
   display: none;
 }
 
+/* TODO: Find a way to move this styling into the proof editor. */
+.proofEditorContainer.editable {
+  margin: 20px 20px 20px 80px;
+  border: 1px solid #ddd;
+  border-bottom: none;
+  padding: 1em;
+  border-radius: 8px 8px 0 0;
+  background-color: honeydew;
+}
+
 #problemArea {
   margin-bottom: 5em;
 }
@@ -89,6 +99,9 @@ menus back to algebra mode before starting to work.
 </ol>
 </div>
 
+</span> <!-- content -->
+</div> <!-- flex -->
+
 <div id=workArea class="hidden proofEditorContainer">
 <div>
 <b style="font-size:larger">Problem work area</b>
@@ -101,10 +114,6 @@ in progress in another window or tab.</i>
 <p>
 <div id=proof></div>
 </div>
-
-</span> <!-- content -->
-
-</div> <!-- flex -->
 
 <!-- Storage for state to preserve across page unloads -->
 <textarea id=ToyStore rows=20 cols=80 class=hidden></textarea>
