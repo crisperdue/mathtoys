@@ -10,25 +10,6 @@
   
 <style type="text/css">
 
-/* If the proof editor is not editable, display this. */
-.proofEditorContainer .ifReadOnly {
-  display: block;
-}
-
-.proofEditorContainer.editable .ifReadOnly {
-  display: none;
-}
-
-/* TODO: Find a way to move this styling into the proof editor. */
-.proofEditorContainer.editable {
-  margin: 20px 20px 20px 80px;
-  border: 1px solid #ddd;
-  border-bottom: none;
-  padding: 1em;
-  border-radius: 8px 8px 0 0;
-  background-color: honeydew;
-}
-
 #problemArea {
   margin-bottom: 5em;
 }
@@ -92,7 +73,7 @@ still learning its algebra too!  It is very limited in what it can do
 with fractions and rational functions, though it knows the bare facts.
 After entering your assumptions you will probably want to switch the
 menus back to algebra mode before starting to work.
-<p>
+
 <div id=problemArea>
 <h3>Equations to solve</h3>
 <ol id=problemList>
@@ -102,21 +83,7 @@ menus back to algebra mode before starting to work.
 </span> <!-- content -->
 </div> <!-- flex -->
 
-<div id=workArea class="hidden proofEditorContainer">
-<div>
-<b style="font-size:larger">Problem work area</b>
-<button class="tryAnother float">Try a different problem ... </button>
-</div>
-<p class=ifReadOnly>
-<i><b style="color:red">Note:</b> This display is read-only due to editing
-in progress in another window or tab.</i>
-</p>
-<p>
-<div id=proof></div>
-</div>
-
-<!-- Storage for state to preserve across page unloads -->
-<textarea id=ToyStore rows=20 cols=80 class=hidden></textarea>
+<div id=proof class=hidden></div>
 
 <script>
 // Insert boilerplate.
@@ -140,9 +107,9 @@ $(function() {
     };
 
     $('#proof').append(editor.containerNode);
-    // Nudge the editor to set up any parent to reflect
-    // its editable state.
-    editor.setEditable(editor.isEditable());
+    $('#proof').find('.proofEditorHeader')
+      .append('<button class="tryAnother float">' +
+              'Try a different problem</button>');
 
     // TODO: Consider using a list of document names rather than
     // a list of lists of wffs to represent a problem set.
@@ -168,7 +135,7 @@ $(function() {
 
     function swapAreas() {
       $('#problemArea').toggle(300);
-      $('#workArea').toggle(300);
+      $('#proof').toggle(300);
       proofVisible = !proofVisible;
     }
 
