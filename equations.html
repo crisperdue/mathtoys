@@ -132,7 +132,7 @@ $(function() {
 
     // Initialize visibility based on whether there
     // are currently any steps in the proof.
-    let proofVisible = editor.steps.length > 0;
+    let proofVisible = editor.hasInitialSteps();
 
     function swapAreas() {
       $('#problemArea').toggle(300);
