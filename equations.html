@@ -151,13 +151,7 @@ $(function() {
       editor.stepEditor.showRules = [];
       editor.setRulesMode('algebra');
       var assumptions = event.data.assumptions;
-      var saved = Toy.stepEditor;
-      Toy.stepEditor = editor.stepEditor;
-      try {
-        editor.givens = assumptions;
-      } finally {
-        Toy.stepEditor = saved;
-      }
+      editor.givens = assumptions;
     };
 
     function tryOwnProblem() {
