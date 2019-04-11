@@ -132,7 +132,8 @@ $(function() {
 
     // Initialize visibility based on whether there
     // are currently any steps in the proof.
-    const proofState = Toy.readDoc(editor.getDocumentName()).proofState;
+    const doc = Toy.readDoc(editor.getDocumentName());
+    const proofState = doc ? doc.proofState : '';
     // This is a hack; a quick check without even parsing the steps.
     // TODO: Manage proof visibility some entirely different way, such
     //   as swapping its display in asynchronously when it loads with
