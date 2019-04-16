@@ -119,7 +119,8 @@ $(function() {
     }
 
     if (proofVisible) {
-      // Really the proof is not yet visible.
+      // Really the proof is not yet visible, but there is
+      // work in progress.
       proofVisible = false;
       // So make it visible now.
       swapAreas();
@@ -127,6 +128,7 @@ $(function() {
 
     function handleTryProblem(event) {
       swapAreas();
+      editor.setSteps([]);
       var problem = event.data.problem;
       var stmt = problem.stmt;
       editor.addStep(rules.consider(stmt));
@@ -152,6 +154,7 @@ $(function() {
 
     function tryOwnProblem() {
       swapAreas();
+      editor.setSteps([]);
       editor.stepEditor.showRules = ['consider'];
       editor.setRulesMode('algebra');
     }
