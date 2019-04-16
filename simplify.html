@@ -9,7 +9,11 @@
   <script src="mathtoys.js"></script>
 
 <style type="text/css">
-/* Page-specific CSS here */
+
+#problemArea li {
+  margin: .5em 0;
+}
+
 </style>
 
 </head>
@@ -98,19 +102,20 @@ $(function() {
        simplified: '9 * x - 29'}
     ];
 
-    Toy.proofToyState.init();
-
-    var proofVisible = !!Toy.proofToyState.data.proofVisible;
+    // Initialize visibility based on whether there
+    // are currently any steps in the proof.
+    const doc = Toy.readDoc(editor.getDocumentName());
+    const proofState = doc ? doc.proofState : '';
+    // This is a hack; a quick check without even parsing the steps.
+    // TODO: Manage proof visibility some entirely different way, such
+    //   as swapping its display in asynchronously when it loads with
+    //   at least one step.
+    let proofVisible = proofState.length > 12;
 
     function swapAreas() {
-      editor.stepEditor.showRules = [];
-      editor.stepEditor.reset();
-      editor.proofDisplay.setSteps([]);
       $('#problemArea').toggle(300);
       $('#workArea').toggle(300);
       proofVisible = !proofVisible;
-      Toy.proofToyState.data.proofVisible = proofVisible;
-      Toy.proofToyState.store();
     }
 
     if (proofVisible) {
