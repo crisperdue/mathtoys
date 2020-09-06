@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+# Deploy mathtoys from the ~/src/publish area.
+
+PUB=~/src/publish
+TREE=~/tmp/mathtoys-tree
+
+echo "Publishing from $PUB."
+
+cd $PUB/prooftoys
+git pull
+
+cd $PUB/mathtoys
+git pull
+mktree . $TREE
+cd $TREE
+netlify deploy --site mathtoys.netlify.app --dir site -p
