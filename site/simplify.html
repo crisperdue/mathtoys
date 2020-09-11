@@ -76,13 +76,14 @@ problems.
 
 <script>
 
-// Insert boilerplate.
-Toy.insertNav();
-Toy.insertSlogans();
-Toy.mathifyAll();
-
 // On DOM ready:
 $(function() {
+
+    // Insert boilerplate.
+    Toy.insertNav();
+    Toy.insertSlogans();
+    Toy.mathifyAll();
+
     var rules = Toy.rules;
     var $problemList = $('#problemList');
     var editor = new Toy.ProofEditor();

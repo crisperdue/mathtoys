@@ -1,4 +1,4 @@
-// Copyright 2011, 2012, 2013 Crispin Perdue.  All rights reserved.
+// Copyright Crispin Perdue.  All rights reserved.
 
 // Boilerplate text for the left navigation area.
 Toy.navText = [
@@ -11,13 +11,4 @@ Toy.navText = [
   '<a href="http://prooftoys.org/">Prooftoys website</a>',
   '</ul>'
 ].join('\n');
-
-// Set the G+ inserter for Mathtoys.
-Toy.insertGooglePlus = function() {
-    var x =
-      '<div class="g-community" ' +
-      'data-href="https://plus.google.com/communities/114988124375826899091"' +
-      'data-layout="landscape"></div>';
-  $('body').prepend(x);
-};
 
