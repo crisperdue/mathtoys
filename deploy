@@ -1,0 +1,25 @@
+#!/bin/bash
+#
+# Deploy mathtoys from the ~/src/publish area.
+
+PUB=~/src/publish
+TREE=~/tmp/mathtoys-tree
+
+run() {
+  echo '$' $@
+  "$@"
+}
+
+
+make_tree() {
+rm -rf "$2"
+rsync -rt -l --copy-unsafe-links --delete-after \
+  --exclude=.git --exclude=.DS_Store --exclude=webalizer \
+  "$1/" "$2"
+}
+
+run cd ~/src/publish/mathtoys
+run git pull
+run make_tree . $TREE
+run cd $TREE
+run netlify deploy --site mathtoys.netlify.app --dir site -p
