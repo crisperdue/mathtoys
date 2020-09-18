@@ -10,7 +10,7 @@ run() {
   "$@"
 }
 
-
+# Copy tree rooted at $1 into $2
 make_tree() {
 rm -rf "$2"
 rsync -rt -l --copy-unsafe-links --delete-after \
@@ -18,8 +18,14 @@ rsync -rt -l --copy-unsafe-links --delete-after \
   "$1/" "$2"
 }
 
-run cd ~/src/publish/mathtoys
+echo ==== Publishing from $PUB/prooftoys ====
+sleep 3
+
+run cd $PUB/prooftoys
 run git pull
-run make_tree . $TREE
-run cd $TREE
-run netlify deploy --site mathtoys.netlify.app --dir site -p
+
+run cd $PUB/mathtoys
+run git pull
+run make_tree site $TREE
+
+run netlify deploy --site mathtoys.netlify.app --dir $TREE -p
