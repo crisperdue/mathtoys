@@ -424,7 +424,7 @@ span#leftNav {
 
 /* Override the left margin just above to push the first child to the left. */
 /* Any subsequent rows will be indented more. */
-.proofStep > :first-child {
+.proofStep .stepAndControls {
     margin-left: -4em;
 }
 
@@ -432,19 +432,13 @@ span#leftNav {
     position: absolute;
     left: 0;
     right: 0;
-    color: #aaa;
+    color: #555;
     background-color: #fcfcfc;
-    /* For some reason border here does not affect stepAndControls. */
-    /* border: .5px solid #bbf; */
+    border: .5px solid #bbf;
     /* Try to help situations where this overlaps the menu. */
     z-index: 1;
     /* This node is transparent to mouse events. */
     pointer-events: none;
-}
-
-.proofStep.stepSuggestion .stepAndControls {
-    /* For some reason this does not inherit from the proofStep */
-    background-color: #fcfcfc;
 }
 
 .proofStep.stepMessage {
