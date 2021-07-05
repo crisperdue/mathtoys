@@ -1,0 +1,98 @@
+/* Simple page layout for mathtoys.org,
+   and a little input control styling */
+
+body {
+  margin: 0 20px;
+  text-align: left;
+  font-family: Roboto, sans-serif;
+  /*
+   * Allow extra space for math formatting such as subscripts.
+   * The plain number is inherited as-is, where a percentage or
+   * em value, etc. is inherited as computed in the parent.
+   */
+  line-height: 1.5;
+}
+
+h1 {
+  font-size: 2em;
+  font-weight: bold;
+  margin: 1em 0px .2em;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+h2, h3 {
+    margin-top: .4em;
+    margin-bottom: .5em;
+}
+
+/* Just below the main heading */
+div#slogans {
+  color: ForestGreen;
+  margin: 0em 10em;
+  min-height: 6em;
+  text-align: center;
+  font-style: italic;
+}
+
+div#slogans .author {
+  white-space: nowrap;
+}
+
+/*
+ * About the layout of Prooftoys pages and the use of SPAN tags
+ *
+ * Prooftoys is now using inline-block layout rather than the earlier
+ * table-based layout.  IE7 and earlier only support the inline-block
+ * style on tags with native inline layout, so #leftNav and #content
+ * are SPAN tags.
+ *
+ * Table-based layout caused problems with unwanted early text
+ * wrapping of deeply nested and indented expressions, so it had to
+ * go.  Also, the current approach allows content to overflow the end
+ * of line, which turns out to be a pretty good tradeoff over
+ * everything trying to squeeze itself into the table width.
+ */
+
+/* Contains the left navigation */
+span#leftNav {
+  vertical-align: top;
+  padding-top: 7em;
+  display: inline-block;
+  width: 20%;
+  text-indent: -1em;
+}
+
+#leftNav a {
+  display: block;
+  font-weight: bold;
+  color: Sienna;
+  text-decoration: none;
+  margin: .3em 1em .3em 1em;
+}
+
+/* Left nav items */
+#leftNav a:before {
+  content: "⊦ ";
+}
+
+/* Entire main content of the page goes here */
+#content {
+  display: inline-block;
+  width: 79%;
+}
+
+input, button, select {
+    font-size: .8rem;
+    margin: 0 4px;
+}
+
+input[type=button], button {
+    background-color: #ddf;
+    border-radius: 6px;
+    padding: 3px 12px;
+}

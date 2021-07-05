@@ -3,19 +3,10 @@
 # Deploy mathtoys from the ~/src/publish area.
 
 PUB=~/src/publish
-TREE=~/tmp/mathtoys-tree
 
 run() {
   echo '$' $@
   "$@"
-}
-
-# Copy tree rooted at $1 into $2
-make_tree() {
-rm -rf "$2"
-rsync -rt -l --copy-unsafe-links --delete-after \
-  --exclude=.git --exclude=.DS_Store --exclude=webalizer \
-  "$1/" "$2"
 }
 
 echo ==== Publishing from $PUB/prooftoys ====
@@ -26,6 +17,5 @@ run git pull
 
 run cd $PUB/mathtoys
 run git pull
-run make_tree site $TREE
 
-run netlify deploy --site mathtoys.netlify.app --dir $TREE -p
+run netlify deploy --site mathtoys.netlify.app --dir site -p

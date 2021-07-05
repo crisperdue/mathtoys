@@ -1,17 +1,28 @@
-// Copyright Crispin Perdue.  All rights reserved.
+//// Copyright Crispin Perdue.  All rights reserved.
+
+//// Support code for pages of mathtoys.org.
+
+var Toy = Toy || {};
 
 // Boilerplate text for the left navigation area.
 //
 Toy.navText = [
   '<a class=nav href="./">',
   'Home page</a>',
-  '<a href="simplify.html">Simplification</a>',
   '<a href="equations.html">Solving equations</a>',
+  '<a href="simplify.html">Simplification</a>',
   '<a href="http://github.com/crisperdue/mathtoys"',
   ' target=_blank>GitHub project</a>',
   '<a href="http://prooftoys.org/">Prooftoys website</a>',
   '</ul>'
 ].join('\n');
+
+Toy.insertNav = function() {
+  var nav = document.getElementById('leftNav');
+  if (nav) {
+    nav.innerHTML = Toy.navText;
+  }
+};
 
 // Matomo analytics support
 //
