@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Deploy mathtoys from the ~/src/publish area.
+# Deploy mathtoys.org to Netlify from the ~/src/publish area.
 
 PUB=~/src/publish
 
