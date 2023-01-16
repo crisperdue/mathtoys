@@ -6,6 +6,18 @@
   <link rel="stylesheet" href="https://prooftoys.org/css/style.css">
   <link rel="stylesheet" href="https://prooftoys.org/css/pt.css">
   <link rel="stylesheet" href="/css/mathtoys.css">
+  <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
+  <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
+  <script type=module>
+  import Dexie from 'https://unpkg.com/dexie@latest/dist/modern/dexie.mjs';
+  window.Dexie = Dexie;
+  // This is a step toward a Prooftoys version of the Natural Numbers
+  // Game.  For that application, operators such as "+" and "*" for
+  // real numbers are not available.
+  if (Toy.useRealNumbers !== false) {
+    Toy.requireRealNumbers && Toy.requireRealNumbers();
+  }
+  </script>
   <script src="mathtoys.js"></script>
 <style type="text/css">
 
@@ -100,7 +112,6 @@ $(function() {
     var $problemList = $('#problemList');
     var editor = new Toy.ProofEditor();
     window.proofEditor = editor;
-    editor.setRulesMode('algebra');
     editor.stepEditor.standardSolution = true;
 
     // For debugging.
@@ -109,7 +120,7 @@ $(function() {
       proofEditor.proofDisplay.setSteps(Toy.unrenderedDeps(step));
     };
 
-    $('#proof').append(editor.containerNode);
+    $('#proof').append(editor.$node);
     $('#proof').find('.proofEditorHeader')
       .append('<button class="tryAnother float">' +
               'Try a different problem</button>');
@@ -157,7 +168,6 @@ $(function() {
     function handleTryProblem(event) {
       swapAreas();
       editor.stepEditor.showRules = [];
-      editor.setRulesMode('algebra');
       var assumptions = event.data.assumptions;
       editor.givens = assumptions;
     };
@@ -165,12 +175,10 @@ $(function() {
     function tryOwnProblem() {
       swapAreas();
       editor.stepEditor.showRules = ['given'];
-      editor.setRulesMode('algebra');
     }
 
     function tryExperiments() {
       swapAreas();
-      editor.setRulesMode('general');
     }
 
     // Insert the problems.

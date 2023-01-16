@@ -7,6 +7,18 @@
   <link rel="stylesheet" href="https://prooftoys.org/css/style.css">
   <link rel="stylesheet" href="https://prooftoys.org/css/pt.css">
   <link rel="stylesheet" href="/css/mathtoys.css">
+  <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
+  <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
+  <script type=module>
+  import Dexie from 'https://unpkg.com/dexie@latest/dist/modern/dexie.mjs';
+  window.Dexie = Dexie;
+  // This is a step toward a Prooftoys version of the Natural Numbers
+  // Game.  For that application, operators such as "+" and "*" for
+  // real numbers are not available.
+  if (Toy.useRealNumbers !== false) {
+    Toy.requireRealNumbers();
+  }
+  </script>
   <script src="mathtoys.js"></script>
 <style type="text/css">
 
@@ -87,8 +99,7 @@ $(function() {
     var editor = new Toy.ProofEditor();
     window.proofEditor = editor;
     editor.setEditable(true);
-    editor.setRulesMode('algebra');
-    $('#proof').append(editor.containerNode);
+    $('#proof').append(editor.$node);
 
     var problems = [
       {stmt: '3 * h - 14 + 7 * h - 2 * h  - 5 * h + 3',
@@ -132,7 +143,6 @@ $(function() {
       var stmt = problem.stmt;
       editor.addStep(rules.consider(stmt));
       editor.stepEditor.showRules = [];
-      editor.setRulesMode('algebra');
       var simplified = problem.simplified;
       if (simplified) {
         // This is only the rhs.
@@ -155,7 +165,6 @@ $(function() {
       swapAreas();
       editor.setSteps([]);
       editor.stepEditor.showRules = ['consider'];
-      editor.setRulesMode('algebra');
     }
 
     // Insert the problems.

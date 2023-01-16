@@ -6,6 +6,18 @@
   <link rel="stylesheet" href="https://prooftoys.org/css/style.css">
   <link rel="stylesheet" href="https://prooftoys.org/css/pt.css">
   <link rel="stylesheet" href="/css/mathtoys.css">
+  <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
+  <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
+  <script type=module>
+  import Dexie from 'https://unpkg.com/dexie@latest/dist/modern/dexie.mjs';
+  window.Dexie = Dexie;
+  // This is a step toward a Prooftoys version of the Natural Numbers
+  // Game.  For that application, operators such as "+" and "*" for
+  // real numbers are not available.
+  if (Toy.useRealNumbers !== false) {
+    Toy.requireRealNumbers();
+  }
+  </script>
   <script src="mathtoys.js"></script>
 </head>
 <body>
